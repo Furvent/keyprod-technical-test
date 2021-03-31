@@ -1,10 +1,10 @@
 <template>
-  <div class="d-flex">
+  <div class="d-flex justify-center">
     <OrdersList
       :orders="orders"
       @load-order-details="loadOrderDetails"
     />
-    <OrderDetail :order-details="orderSelected" class="ml-4" />
+    <OrderDetail v-if="orderSelected" :order-details="orderSelected" class="ml-4" />
   </div>
 </template>
 

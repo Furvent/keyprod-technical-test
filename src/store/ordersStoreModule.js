@@ -12,24 +12,28 @@ export default {
             version: "1",
             scanned: true,
             productScanned: "KeyNetic_V1_DGAHHM",
+            package: "4114H8974L",
           },
           {
             model: "KeyNetic",
             version: "1",
             scanned: false,
             productScanned: undefined,
+            package: undefined,
           },
           {
             model: "KeyVibe",
             version: "1",
             scanned: true,
             productScanned: "KeyVibe_V1_AAEDFR",
+            package: "4114H8974L",
           },
           {
             model: "KeyVibe",
             version: "1",
             scanned: false,
             productScanned: undefined,
+            package: undefined,
           },
         ],
         packages: ["4114H8974L"],
@@ -41,10 +45,38 @@ export default {
     getAllOrders: (state) => {
       return state.orders;
     },
-    getOrderById: (state) => (searchedId) => {
-      return state.orders.find((order) => order.id === searchedId);
+    getOrderById: (state) => (orderId) => {
+      return state.orders.find((order) => order.id === orderId);
+    },
+    // Maybe not the right place, put it in utils.js ?
+    getProductWeightWithModelAndVersion: (state) => (model, version) => {
+      model = model.toLowerCase();
+      version = "v" + version;
+      const weight = productsCatalogWeight[model][version];
+      if (!weight) {
+        console.error(
+          "In function getProductWeight(), model or version is unknown"
+        );
+        return undefined;
+      } else return weight;
     },
   },
 
-  mutations: {},
+  mutations: {
+    updateProductsOrderedWithOrderId: (state, {productsOrdered, id}) => {
+      const orderSearched = state.orders.find((order) => order.id === id);
+      orderSearched.productsOrdered = productsOrdered;
+    }
+  },
+};
+
+const productsCatalogWeight = {
+  keynetic: {
+    v1: 280,
+    v2: 250,
+  },
+  keyvibe: {
+    v1: 240,
+    v2: 210,
+  },
 };

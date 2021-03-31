@@ -17,7 +17,8 @@ export default {
   getters: {
     getPackageByTrackingNumber: (state) => (trackingNumberSearched) => {
       return state.packages.find(
-        (package) => package.trackingNumber === trackingNumberSearched
+        // package is a reserved keyword so pack used 
+        (pack) => pack.trackingNumber === trackingNumberSearched
       );
     },
   },

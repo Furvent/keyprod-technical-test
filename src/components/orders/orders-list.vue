@@ -1,8 +1,8 @@
 <template>
   <v-card flat dark>
     <v-card-title> LISTES DES COMMANDES </v-card-title>
-    <v-card-text
-      ><v-simple-table>
+    <v-card-text>
+      <v-simple-table>
         <template v-slot:default>
           <thead>
             <tr>
@@ -25,8 +25,8 @@
             </tr>
           </tbody>
         </template>
-      </v-simple-table></v-card-text
-    >
+      </v-simple-table>
+    </v-card-text>
   </v-card>
 </template>
 
