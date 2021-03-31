@@ -6,10 +6,11 @@ export default {
       {
         trackingNumber: "4114H8974L",
         status: PackageStatus.IN_TRANSIT,
-        products: [
-          "KeyNetic_V1_DGAHHM",
-          "KeyVibe_V1_AAEDFR"
-        ]
+        weight: 520,
+        // products: [
+        //   "KeyNetic_V1_DGAHHM",
+        //   "KeyVibe_V1_AAEDFR"
+        // ]
       }
     ]
   },
