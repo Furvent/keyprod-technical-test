@@ -10,8 +10,8 @@ export default {
           {
             model: "KeyNetic",
             version: "1",
-            scanned: false,
-            productScanned: undefined
+            scanned: true,
+            productScanned: "KeyNetic_V1_DGAHHM"
           },
           {
             model: "KeyNetic",
