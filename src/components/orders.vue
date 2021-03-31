@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <OrdersList/>
+    <OrdersList :orders="orders"/>
     <OrderDetail class="ml-4"/>
   </div>
 </template>

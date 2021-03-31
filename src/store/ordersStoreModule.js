@@ -11,32 +11,30 @@ export default {
             model: "KeyNetic",
             version: "1",
             scanned: true,
-            productScanned: "KeyNetic_V1_DGAHHM"
+            productScanned: "KeyNetic_V1_DGAHHM",
           },
           {
             model: "KeyNetic",
             version: "1",
             scanned: false,
-            productScanned: undefined
+            productScanned: undefined,
           },
           {
             model: "KeyVibe",
             version: "1",
             scanned: true,
-            productScanned: "KeyVibe_V1_AAEDFR"
+            productScanned: "KeyVibe_V1_AAEDFR",
           },
           {
             model: "KeyVibe",
             version: "1",
             scanned: false,
-            productScanned: undefined
-          }
+            productScanned: undefined,
+          },
         ],
-        packages: [
-          "4114H8974L"
-        ]
-      }
-    ]
+        packages: ["4114H8974L"],
+      },
+    ],
   },
 
   getters: {
@@ -45,9 +43,8 @@ export default {
     },
     getOrderById: (state) => (searchedId) => {
       return state.orders.find((order) => order.id === searchedId);
-    }
+    },
   },
 
-  mutations: {
-  },
+  mutations: {},
 };
