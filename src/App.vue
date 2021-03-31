@@ -13,12 +13,12 @@
           </v-tabs>
         </template>
       </v-toolbar>
-      <v-tabs-items v-model="tab">
+      <v-tabs-items v-model="tab" class="mx-10 mt-2">
         <v-tab-item>
-          qzdqd
+          <Orders />
         </v-tab-item>
         <v-tab-item>
-          ghhdtd
+          <Packages />
         </v-tab-item>
       </v-tabs-items>
     </v-card>
@@ -26,16 +26,18 @@
 </template>
 
 <script>
+import Orders from "./components/orders";
+import Packages from "./components/packages";
+
 export default {
   name: "App",
 
-  components: {},
+  components: { Orders, Packages },
 
   data: () => ({
     tab: null,
   }),
 
-  methods: {
-  }
+  methods: {},
 };
 </script>
