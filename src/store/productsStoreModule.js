@@ -7,13 +7,19 @@ export default {
         version: "1",
         weight: 280,
       },
+      {
+        serializedId: "KeyVibe_V1_AAEDFR",
+        model: "KeyVibe",
+        version: "1",
+        weight: 240,
+      },
     ],
   },
 
   getters: {
-    getProductBySerializedId: (state) => (serializedId) => {
+    getProductBySerializedId: (state) => (serializedIdSearched) => {
       return state.products.find(
-        (product) => product.serializedId === serializedId
+        (product) => product.serializedId === serializedIdSearched
       );
     },
   },

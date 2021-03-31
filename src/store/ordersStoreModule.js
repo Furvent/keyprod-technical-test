@@ -1,11 +1,11 @@
-import { OrderState } from "../enums/enums";
+import { OrderStatus } from "../enums/enums";
 
 export default {
   state: {
     orders: [
       {
         id: "4325C4744T",
-        status: OrderState.TO_PREPARE,
+        status: OrderStatus.ONGOING,
         productsOrdered: [
           {
             model: "KeyNetic",
@@ -22,8 +22,8 @@ export default {
           {
             model: "KeyVibe",
             version: "1",
-            scanned: false,
-            productScanned: undefined
+            scanned: true,
+            productScanned: "KeyVibe_V1_AAEDFR"
           },
           {
             model: "KeyVibe",
@@ -32,8 +32,8 @@ export default {
             productScanned: undefined
           }
         ],
-        // List IDs
         packages: [
+          "4114H8974L"
         ]
       }
     ]
