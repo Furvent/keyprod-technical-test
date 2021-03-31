@@ -4,7 +4,7 @@
       :orders="orders"
       @load-order-details="loadOrderDetails"
     />
-    <OrderDetail :order-detail="orderSelected" class="ml-4" />
+    <OrderDetail :order-details="orderSelected" class="ml-4" />
   </div>
 </template>
 
