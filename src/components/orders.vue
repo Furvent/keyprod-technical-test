@@ -30,6 +30,12 @@ export default {
     },
   },
 
+  mounted () {
+    if (this.orders.length) {
+      this.orderSelected = this.orders[0];
+    };
+  },
+
   methods: {
     loadOrderDetails(orderId) {
       console.log("Order clicked", orderId);

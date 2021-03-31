@@ -1,6 +1,6 @@
 <template>
   <v-card flat dark>
-    <v-card-title> COMMANDE SÉLECTIONNÉE </v-card-title>
+    <v-card-title> COMMANDE SÉLECTIONNÉE : {{orderDetails.id}}</v-card-title>
     <v-card-text>
       <!-- Products details -->
       <v-simple-table>
@@ -15,6 +15,7 @@
               </td>
               <td>V{{ product.version }}</td>
               <td>{{ getProductWeight(product.model, product.version) }}g</td>
+              <!-- SCAN -->
               <td>
                 <v-btn
                   v-if="product.scanned === false"
@@ -27,22 +28,27 @@
                   {{ product.productScanned }}
                 </span>
               </td>
+              <!-- Package -->
               <td>
-                <span v-if="product.package">
-                  Envoyé avec le colis numéro {{ product.package }}
-                </span>
-                <span v-else-if="tempPackages.length > 0">
-                  <v-select
-                    :items="tempPackages"
-                    item-text="number"
-                    @change="getChange(product)"
-                    return-object
-                  >
-                  </v-select>
-                </span>
-                <span v-else>
-                  Commencer un nouveau colis pour attribuer ce produit
-                </span>
+                <div v-if="product.scanned">
+                  <span v-if="product.package === 'En préparation'">
+                    En préparation
+                  </span>
+                  <span v-else-if="product.package">
+                    Envoyé avec le colis numéro {{ product.package }}
+                  </span>
+                  <span v-else-if="currentPackage">
+                    <v-btn
+                      text
+                      color="blue"
+                      @click.stop="addProductToCurrentPackage(product)"
+                      >Ajouter au colis</v-btn
+                    >
+                  </span>
+                  <span v-else>
+                    Commencer un nouveau colis pour attribuer ce produit
+                  </span>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -52,18 +58,21 @@
       <div class="mt-2 ml-1">
         <!-- Ongoing -->
         <div>COLIS EN COURS</div>
-        <v-simple-table>
+        <v-simple-table v-if="currentPackage">
           <template v-slot:default>
             <tbody>
-              <tr v-for="(pack, index) in tempPackages" :key="index">
+              <tr>
                 <td>Colis en cours</td>
-                <td>Poids : {{ pack.weight }}g</td>
+                <td>Poids : {{ currentPackage.weight }}g</td>
               </tr>
             </tbody>
           </template>
         </v-simple-table>
-        <v-btn small dark color="grey" @click.stop="addPackage()"
+        <v-btn v-if="!currentPackage" small dark color="grey" @click.stop="addPackage()"
           >Commencer un colis</v-btn
+        >
+        <v-btn v-else small dark color="green" @click.stop="sendPackage()"
+          >Envoyer le colis</v-btn
         >
         <!-- Send -->
         <div>COLIS ENVOYÉS</div>
@@ -98,12 +107,12 @@ export default {
 
   data() {
     return {
-      tempPackages: [],
-      selectedInput: null,
+      currentPackage: null,
     };
   },
 
   computed: {
+    // Unused
     getUnpackedProducts() {
       return this.orderDetails.productsOrdered.filter(
         (product) => product.package === undefined
@@ -142,20 +151,26 @@ export default {
       // Update store
       this.$store.commit("updateProductsOrderedWithOrderId", this.orderDetails);
     },
-
     addPackage() {
-      this.tempPackages.push({
-        number: "Colis numéro " + (this.tempPackages.length + 1),
+      this.currentPackage = {
         id: "",
         weight: 0,
         status: PackageStatus.BEING_PREPARED,
-      });
-      this.selectedInput = this.tempPackages[0];
+        products: [],
+      };
     },
-
-    getChange(product) {
-      console.log("select input change", product);
-      
+    sendCurrentPackage() {
+      // generate id,
+      // change products package to id,
+      // push package to package store
+      // put at null currentPackage
+      // Not here but remove colis en cours if all products are send
+    },
+    addProductToCurrentPackage(product) {
+      product.package = "En préparation";
+      this.currentPackage.products.push;
+      const {model, version} = product;
+      this.currentPackage.weight += this.getProductWeight(model, version)
     },
   },
 };
