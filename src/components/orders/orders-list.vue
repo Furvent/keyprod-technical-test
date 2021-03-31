@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="pa-2">
+  <v-card flat>
     <v-simple-table dark>
       <template v-slot:default>
         <thead>
@@ -9,7 +9,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="order in orders" :key="order.id">
+          <tr v-for="order in orders" :key="order.id" @click.stop="loadOrderDetails(order.id)">
             <td>
               {{ order.id }}
             </td>
@@ -50,6 +50,9 @@ export default {
           break;
       }
     },
+    loadOrderDetails(orderId) {
+      this.$emit("load-order-details", orderId);
+    }
   },
 };
 </script>

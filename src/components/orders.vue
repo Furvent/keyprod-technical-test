@@ -1,7 +1,10 @@
 <template>
   <div class="d-flex">
-    <OrdersList :orders="orders"/>
-    <OrderDetail class="ml-4"/>
+    <OrdersList
+      :orders="orders"
+      @load-order-details="loadOrderDetails"
+    />
+    <OrderDetail :order-detail="orderSelected" class="ml-4" />
   </div>
 </template>
 
@@ -14,9 +17,23 @@ export default {
     OrdersList,
     OrderDetail,
   },
+
+  data() {
+    return {
+      orderSelected: null
+    }
+  },
+
   computed: {
     orders() {
       return this.$store.getters.getAllOrders;
+    },
+  },
+
+  methods: {
+    loadOrderDetails(orderId) {
+      console.log("Order clicked", orderId);
+      this.orderSelected = this.$store.getters.getOrderById(orderId);
     },
   },
 };
