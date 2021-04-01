@@ -79,6 +79,7 @@
           >
           <v-btn
             v-else
+            :disabled="currentPackage === null || currentPackage.products.length <= 0"
             small
             dark
             color="green"
