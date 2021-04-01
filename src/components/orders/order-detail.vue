@@ -1,6 +1,6 @@
 <template>
   <v-card flat dark>
-    <v-card-title> COMMANDE SÉLECTIONNÉE : {{orderDetails.id}}</v-card-title>
+    <v-card-title> COMMANDE SÉLECTIONNÉE : {{ orderDetails.id }}</v-card-title>
     <v-card-text>
       <!-- Products details -->
       <v-simple-table>
@@ -68,10 +68,20 @@
             </tbody>
           </template>
         </v-simple-table>
-        <v-btn v-if="!currentPackage" small dark color="grey" @click.stop="addPackage()"
+        <v-btn
+          v-if="!currentPackage"
+          small
+          dark
+          color="grey"
+          @click.stop="addPackage()"
           >Commencer un colis</v-btn
         >
-        <v-btn v-else small dark color="green" @click.stop="sendPackage()"
+        <v-btn
+          v-else
+          small
+          dark
+          color="green"
+          @click.stop="sendCurrentPackage()"
           >Envoyer le colis</v-btn
         >
         <!-- Send -->
@@ -93,6 +103,7 @@
 
 <script>
 import { PackageStatus } from "../../enums/enums";
+import { generateRandomId } from "../../utils";
 
 export default {
   props: {
@@ -153,24 +164,39 @@ export default {
     },
     addPackage() {
       this.currentPackage = {
-        id: "",
+        trackingNumber: "",
         weight: 0,
         status: PackageStatus.BEING_PREPARED,
         products: [],
       };
     },
     sendCurrentPackage() {
-      // generate id,
-      // change products package to id,
+      // generate tracking number,
+      const newPackageId = generateRandomId();
+      this.currentPackage.trackingNumber = newPackageId;
+      /* change products package where "En préparation" to new package id.
+      Search in the products ordered */
+      // TODO: Bad, to improve !
+      this.orderDetails.productsOrdered
+        .filter((productOrdered) => productOrdered.package === "En préparation")
+        .forEach((productFiltred) => (productFiltred.package = newPackageId));
       // push package to package store
+      this.$store.commit("addPackage", this.currentPackage);
       // put at null currentPackage
-      // Not here but remove colis en cours if all products are send
+      this.currentPackage = null;
+      // Update store
+      this.$store.commit("updateProductsOrderedWithOrderId", this.orderDetails);
+      // Update order packages list
+      this.$store.commit("addnewPackageToOrderWithId", {
+        newPackageId,
+        id: this.orderDetails.id,
+      });
     },
     addProductToCurrentPackage(product) {
       product.package = "En préparation";
-      this.currentPackage.products.push;
-      const {model, version} = product;
-      this.currentPackage.weight += this.getProductWeight(model, version)
+      this.currentPackage.products.push(product.productScanned);
+      const { model, version } = product;
+      this.currentPackage.weight += this.getProductWeight(model, version);
     },
   },
 };

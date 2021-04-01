@@ -66,6 +66,10 @@ export default {
     updateProductsOrderedWithOrderId: (state, {productsOrdered, id}) => {
       const orderSearched = state.orders.find((order) => order.id === id);
       orderSearched.productsOrdered = productsOrdered;
+    },
+    addnewPackageToOrderWithId: (state, {newPackageId, id}) => {
+      const orderSearched = state.orders.find((order) => order.id === id);
+      orderSearched.packages.push(newPackageId);
     }
   },
 };
