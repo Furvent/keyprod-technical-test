@@ -125,19 +125,7 @@ export default {
     };
   },
 
-  watch: {
-    orderDetails() {
-      console.log("orderDetails watch call");
-    },
-  },
-
   computed: {
-    // Unused
-    getUnpackedProducts() {
-      return this.orderDetails.productsOrdered.filter(
-        (product) => product.package === undefined
-      );
-    },
     getOrderPackages() {
       const packages = this.orderDetails.packages.map((packageId) => {
         return this.$store.getters.getPackageByTrackingNumber(packageId);
@@ -186,7 +174,7 @@ export default {
       // generate tracking number,
       const newPackageId = generateRandomId();
       this.currentPackage.trackingNumber = newPackageId;
-      this.currentPackage.status = PackageStatus.IN_TRANSIT
+      this.currentPackage.status = PackageStatus.IN_TRANSIT;
       /* change products package where "En préparation" to new package id.
       Search in the products ordered */
       // TODO: Bad, to improve !
@@ -221,7 +209,6 @@ export default {
             product.package !== "En préparation"
         )
       ) {
-        console.log("OrderStatus.SEND", OrderStatus.SEND);
         this.orderDetails.status = OrderStatus.SEND;
       }
     },

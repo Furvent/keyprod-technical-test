@@ -3,9 +3,7 @@
     <v-card-title> LISTES DES COLIS </v-card-title>
     <v-card-text>
       <v-card v-for="pack in packagesWithProducts" :key="pack.trackingNumber">
-        <v-card-title>
-          Colis numéro {{ pack.trackingNumber }}
-        </v-card-title>
+        <v-card-title> Colis numéro {{ pack.trackingNumber }} </v-card-title>
         <v-card-text>
           État :
           {{ getPackStatus(pack.status) }}
@@ -40,7 +38,6 @@ export default {
   computed: {
     packagesWithProducts() {
       const packages = this.$store.getters.getAllPackages;
-      console.log("getAllPackages", packages);
       packages.forEach((pack) => {
         pack.products = this.$store.getters.getProductsWithPackagesTrackingId(
           pack.trackingNumber

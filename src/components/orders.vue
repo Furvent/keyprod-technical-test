@@ -1,10 +1,11 @@
 <template>
   <div class="d-flex justify-center blue-grey darken-4">
-    <OrdersList
-      :orders="orders"
-      @load-order-details="loadOrderDetails"
+    <OrdersList :orders="orders" @load-order-details="loadOrderDetails" />
+    <OrderDetail
+      v-if="orderSelected"
+      :order-details="orderSelected"
+      class="ml-4"
     />
-    <OrderDetail v-if="orderSelected" :order-details="orderSelected" class="ml-4" />
   </div>
 </template>
 
@@ -20,8 +21,8 @@ export default {
 
   data() {
     return {
-      orderSelected: null
-    }
+      orderSelected: null,
+    };
   },
 
   computed: {
@@ -30,15 +31,14 @@ export default {
     },
   },
 
-  mounted () {
+  mounted() {
     if (this.orders.length) {
       this.orderSelected = this.orders[0];
-    };
+    }
   },
 
   methods: {
     loadOrderDetails(orderId) {
-      console.log("Order clicked", orderId);
       this.orderSelected = this.$store.getters.getOrderById(orderId);
     },
   },

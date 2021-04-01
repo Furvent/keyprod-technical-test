@@ -71,7 +71,6 @@ export default {
           });
         }
       });
-      console.log("productsToReturn", productsToReturn);
       return productsToReturn;
     },
   },
