@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-center">
+  <div class="d-flex justify-center blue-grey darken-4">
     <OrdersList
       :orders="orders"
       @load-order-details="loadOrderDetails"

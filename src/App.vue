@@ -1,17 +1,20 @@
 <template>
   <v-app>
-    <v-card flat>
+    <v-card flat class="blue-grey darken-4">
       <!-- Nav -->
-      <v-toolbar flat color="grey">
-        <v-toolbar-title>Your Dashboard</v-toolbar-title>
-        <template v-slot:extension>
-          <v-tabs v-model="tab" align-with-title>
-            <v-tabs-slider color="black"></v-tabs-slider>
-
-            <v-tab> Commandes </v-tab>
-            <v-tab> Colis </v-tab>
-          </v-tabs>
-        </template>
+      <v-toolbar flat dark tile class="d-flex">
+        <v-img
+          src="./assets/KeyProd-Logo-Black--Transparent-SMALL.png"
+          contain
+          max-height="60"
+          max-width="300"
+        >
+        </v-img>
+        <v-tabs v-model="tab" align-with-title>
+          <v-tabs-slider color="red darken-4"></v-tabs-slider>
+          <v-tab> Commandes </v-tab>
+          <v-tab> Colis </v-tab>
+        </v-tabs>
       </v-toolbar>
       <v-tabs-items v-model="tab" class="mx-10 mt-2">
         <v-tab-item>
@@ -41,3 +44,9 @@ export default {
   methods: {},
 };
 </script>
+
+<style scoped>
+#app {
+  background-color: #263238;
+}
+</style>

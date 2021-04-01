@@ -1,5 +1,5 @@
 <template>
-  <v-card flat dark>
+  <v-card flat dark tile>
     <v-card-title> LISTES DES COLIS </v-card-title>
     <v-card-text>
       <v-card v-for="pack in packagesWithProducts" :key="pack.trackingNumber">
