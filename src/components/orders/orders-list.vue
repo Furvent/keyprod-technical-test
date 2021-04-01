@@ -51,7 +51,7 @@ export default {
           return "À préparer";
         case OrderStatus.ONGOING:
           return "En cours";
-        case OrderStatus.TO_PREPARE:
+        case OrderStatus.SEND:
           return "Terminée";
         default:
           break;

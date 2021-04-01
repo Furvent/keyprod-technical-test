@@ -57,33 +57,36 @@
       <!-- Packages -->
       <div class="mt-2 ml-1">
         <!-- Ongoing -->
-        <div>COLIS EN COURS</div>
-        <v-simple-table v-if="currentPackage">
-          <template v-slot:default>
-            <tbody>
-              <tr>
-                <td>Colis en cours</td>
-                <td>Poids : {{ currentPackage.weight }}g</td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
-        <v-btn
-          v-if="!currentPackage"
-          small
-          dark
-          color="grey"
-          @click.stop="addPackage()"
-          >Commencer un colis</v-btn
-        >
-        <v-btn
-          v-else
-          small
-          dark
-          color="green"
-          @click.stop="sendCurrentPackage()"
-          >Envoyer le colis</v-btn
-        >
+        <div v-if="orderDetails.status !== 3">
+          <div>COLIS EN COURS</div>
+          <v-simple-table v-if="currentPackage">
+            <template v-slot:default>
+              <tbody>
+                <tr>
+                  <td>Colis en cours</td>
+                  <td>Poids : {{ currentPackage.weight }}g</td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+          <v-btn
+            v-if="!currentPackage"
+            small
+            dark
+            color="grey"
+            @click.stop="addPackage()"
+            >Commencer un colis</v-btn
+          >
+          <v-btn
+            v-else
+            small
+            dark
+            color="green"
+            @click.stop="sendCurrentPackage()"
+            >Envoyer le colis</v-btn
+          >
+        </div>
+
         <!-- Send -->
         <div>COLIS ENVOYÉS</div>
         <v-simple-table>
@@ -102,7 +105,7 @@
 </template>
 
 <script>
-import { PackageStatus } from "../../enums/enums";
+import { PackageStatus, OrderStatus } from "../../enums/enums";
 import { generateRandomId } from "../../utils";
 
 export default {
@@ -120,6 +123,12 @@ export default {
     return {
       currentPackage: null,
     };
+  },
+
+  watch: {
+    orderDetails() {
+      console.log("orderDetails watch call");
+    },
   },
 
   computed: {
@@ -170,6 +179,9 @@ export default {
         products: [],
       };
     },
+    /**
+     * TODO: Refacto
+     */
     sendCurrentPackage() {
       // generate tracking number,
       const newPackageId = generateRandomId();
@@ -191,12 +203,26 @@ export default {
         newPackageId,
         id: this.orderDetails.id,
       });
+      // Check if order is over
+      this.checkOrderStatus();
     },
     addProductToCurrentPackage(product) {
       product.package = "En préparation";
       this.currentPackage.products.push(product.productScanned);
       const { model, version } = product;
       this.currentPackage.weight += this.getProductWeight(model, version);
+    },
+    checkOrderStatus() {
+      if (
+        this.orderDetails.productsOrdered.every(
+          (product) =>
+            product.package !== undefined &&
+            product.package !== "En préparation"
+        )
+      ) {
+        console.log("OrderStatus.SEND", OrderStatus.SEND);
+        this.orderDetails.status = OrderStatus.SEND;
+      }
     },
   },
 };
