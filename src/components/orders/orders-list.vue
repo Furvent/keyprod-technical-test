@@ -1,7 +1,7 @@
 <template>
   <v-card flat dark>
     <v-card-title> LISTES DES COMMANDES </v-card-title>
-    <v-card-text>
+    <v-card-text >
       <v-simple-table>
         <template v-slot:default>
           <thead>
@@ -27,6 +27,7 @@
         </template>
       </v-simple-table>
     </v-card-text>
+    <v-btn dark @click.stop="generateMockedOrder()">Générer une commande aléatoire</v-btn>
   </v-card>
 </template>
 
@@ -60,6 +61,9 @@ export default {
     loadOrderDetails(orderId) {
       this.$emit("load-order-details", orderId);
     },
+    generateMockedOrder() {
+      this.$store.commit("generateMockedOrder")
+    }
   },
 };
 </script>

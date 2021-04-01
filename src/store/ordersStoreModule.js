@@ -1,4 +1,5 @@
 import { OrderStatus } from "../enums/enums";
+import { generateRandomId } from "../utils";
 
 export default {
   state: {
@@ -84,8 +85,39 @@ export default {
       const orderSearched = state.orders.find((order) => order.id === id);
       orderSearched.packages.push(newPackageId);
     },
+    generateMockedOrder: (state) => {
+      state.orders.push(generateNewMockedOrder());
+    },
   },
 };
+
+function generateNewMockedOrder() {
+  const newOrder = {};
+  newOrder.id = generateRandomId();
+  newOrder.status = OrderStatus.TO_PREPARE;
+  newOrder.productsOrdered = generateMockedProductsOrdered(
+    Math.floor(Math.random() * 6)
+  );
+  newOrder.packages = [];
+  return newOrder;
+}
+
+function generateMockedProductsOrdered(number) {
+  const model = ["KeyNetic", "KeyVibe"];
+  const version = ["1", "2"];
+  const productsOrdered = [];
+  for (let i = 0; i < number; i++) {
+    const newProduct = {
+      model: model[Math.floor(Math.random() * model.length)],
+      version: version[Math.floor(Math.random() * version.length)],
+      scanned: false,
+      productScanned: undefined,
+      package: undefined,
+    };
+    productsOrdered.push(newProduct);
+  }
+  return productsOrdered;
+}
 
 const productsCatalogWeight = {
   keynetic: {
