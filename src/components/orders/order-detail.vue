@@ -211,6 +211,8 @@ export default {
         )
       ) {
         this.orderDetails.status = OrderStatus.SEND;
+      } else {
+        this.orderDetails.status = OrderStatus.ONGOING;
       }
     },
   },
