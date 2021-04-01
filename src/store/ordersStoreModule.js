@@ -60,17 +60,31 @@ export default {
         return undefined;
       } else return weight;
     },
+    getProductsWithPackagesTrackingId: (state) => (trackingId) => {
+      const productsToReturn = [];
+      state.orders.forEach((order) => {
+        if (order.packages.find((pack) => pack === trackingId)) {
+          order.productsOrdered.forEach((product) => {
+            if (product.package === trackingId) {
+              productsToReturn.push(product);
+            }
+          });
+        }
+      });
+      console.log("productsToReturn", productsToReturn);
+      return productsToReturn;
+    },
   },
 
   mutations: {
-    updateProductsOrderedWithOrderId: (state, {productsOrdered, id}) => {
+    updateProductsOrderedWithOrderId: (state, { productsOrdered, id }) => {
       const orderSearched = state.orders.find((order) => order.id === id);
       orderSearched.productsOrdered = productsOrdered;
     },
-    addnewPackageToOrderWithId: (state, {newPackageId, id}) => {
+    addnewPackageToOrderWithId: (state, { newPackageId, id }) => {
       const orderSearched = state.orders.find((order) => order.id === id);
       orderSearched.packages.push(newPackageId);
-    }
+    },
   },
 };
 

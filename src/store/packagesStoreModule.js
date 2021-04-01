@@ -22,6 +22,7 @@ export default {
         (pack) => pack.trackingNumber === trackingNumberSearched
       );
     },
+    getAllPackages: (state) => state.packages
   },
 
   mutations: {

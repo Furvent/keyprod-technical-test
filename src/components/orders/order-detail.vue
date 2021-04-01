@@ -186,6 +186,7 @@ export default {
       // generate tracking number,
       const newPackageId = generateRandomId();
       this.currentPackage.trackingNumber = newPackageId;
+      this.currentPackage.status = PackageStatus.IN_TRANSIT
       /* change products package where "En préparation" to new package id.
       Search in the products ordered */
       // TODO: Bad, to improve !
